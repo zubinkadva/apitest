@@ -1,0 +1,47 @@
+<h2>Price compare</h2>
+
+Welcome
+<b>{{ details_p2.email }}</b>
+<div class="float-right">
+  <button class="btn btn-primary" (click)="logout()">Logout</button>
+</div>
+<br>
+<br>
+
+<form [formGroup]="searchForm" (ngSubmit)="search()">
+  <div class="form-group">
+    <label for="part_no">Part #</label>
+    <input type="text" formControlName="part_no" class="form-control" [ngClass]="{ 'is-invalid': partNum.touched && partNum.errors }" placeholder="1234"
+    />
+    <div *ngIf="partNum.touched && partNum.errors" class="invalid-feedback">
+      <div *ngIf="partNum.errors.required">Part # is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <button [disabled]="searchForm.invalid || searchForm.pending" class="btn btn-primary">Search</button>
+  </div>
+</form>
+<br>
+<br>
+
+<table class="table table-hover table-striped">
+  <thead>
+    <tr>
+      <th>Part #</th>
+      <th>Title</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.part_no }}</td>
+      <td>{{ product.title }}</td>
+      <td>{{ product.price }}</td>
+    </tr>
+
+    <tr *ngIf="!products.length" class="table-warning">
+      <td colspan="100">No products yet</td>
+    </tr>
+  </tbody>
+</table>
